@@ -104,7 +104,12 @@ git remote remove origin
 git remote add origin https://github.com/Foraes/harmony-cursor-rules-gui-enhancement.git
 ```
 
-### Q4: 推送后想修改commit信息
+### Q4: 批处理脚本报错"is not recognized as an internal or external command"
+**原因**：commit message包含emoji或特殊字符，Windows命令行无法解析
+
+**解决方案**：已修复！新版git_push.bat使用纯英文commit message
+
+### Q5: 推送后想修改commit信息
 **解决方案**：
 ```bash
 # 修改最后一次提交信息

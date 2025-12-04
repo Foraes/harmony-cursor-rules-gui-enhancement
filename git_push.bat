@@ -78,27 +78,7 @@ git status
 echo.
 
 echo [步骤7] 提交更改...
-git commit -m "🎉 初始提交：GUI增强版
-
-✨ 新增功能：
-- 图形用户界面（Tkinter）
-- 可视化配置（API密钥、输出路径、模块选择）
-- 实时日志输出和进度显示
-- 一键打包脚本（文件夹/单文件模式）
-- 快速启动脚本
-
-🛠️ 改进：
-- Windows环境优化（.env配置替代export）
-- 打包优化（完善hiddenimports配置）
-- 完整的中文文档
-
-📝 文档：
-- GUI使用说明
-- 快速开始指南
-- 打包问题排查
-- CHANGELOG更新日志
-
-🙏 致谢：本项目基于 @skindhu 的 harmony-cursor-rules 开发"
+git commit -m "Initial commit: GUI Enhanced Version" -m "New features: GUI interface, visual configuration, real-time logs, one-click packaging" -m "Improvements: Windows optimization, packaging optimization, complete documentation" -m "Credits: Based on harmony-cursor-rules by @skindhu"
 
 if %ERRORLEVEL% NEQ 0 (
     echo [错误] 提交失败
