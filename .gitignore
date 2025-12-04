@@ -1,25 +1,23 @@
-.craw
-.env
-.vscode
+# ===================================
+# 此仓库只发布EXE可执行版本
+# 源代码不包含在此仓库中
+# ===================================
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# 排除所有内容，只保留release文件夹
+/*
+!release/
+!/release/**
+
+# 但排除release中的某些文件
+release/.env
+
+# 允许根目录的这些文件
+!.gitignore
+!README.md
+!CHANGELOG.md
+!LICENSE
+
+# 如果release文件夹不存在，允许这些文件暂时存在以便说明
+!.env.example
+!GUI使用说明.md
+!快速开始指南.md
