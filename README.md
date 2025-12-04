@@ -1,197 +1,84 @@
-# HarmonyOS规则爬虫工具 - GUI增强版 🎨
+# HarmonyOS 开发规则生成器
 
-[![基于项目](https://img.shields.io/badge/基于-skindhu/harmony--cursor--rules-blue)](https://github.com/skindhu/harmony-cursor-rules)
-[![License](https://img.shields.io/github/license/Foraes/harmony-cursor-rules-gui-enhancement)](./LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org/)
+## 📖 项目背景
 
-> 🙏 **本项目基于 [@skindhu](https://github.com/skindhu) 的 [harmony-cursor-rules](https://github.com/skindhu/harmony-cursor-rules) 开发**  
-> 感谢原作者的开源贡献！本版本专注于提升Windows用户体验，新增GUI界面和一键打包功能。
+HarmonyOS作为新兴的移动操作系统，由于发展历史相对较短，主流AI模型在预训练阶段缺乏充足的HarmonyOS开发语料。这导致Cursor等AI开发工具在生成HarmonyOS相关代码时效果不佳，开发者难以获得准确的开发建议。
 
----
+本项目旨在解决这一痛点，通过智能爬取华为官方HarmonyOS开发文档，自动提取最佳实践并生成符合Cursor IDE规范的开发规则文件，为开发者提供专业、准确的HarmonyOS开发指导。
 
-## ✨ GUI增强版的新特性
+详细讲解请阅读文章：https://mp.weixin.qq.com/s/gLgP7gGU0pmGc2x1hS-0UQ
 
-相比原项目，本版本新增：
+## 🚀 核心功能
 
-### 🖥️ 图形化界面
-- ✅ 友好的GUI界面，无需命令行操作
-- ✅ 可视化配置API密钥和输出路径
-- ✅ 实时彩色日志显示
-- ✅ 一键开始/停止爬取
+- **📋 智能文档爬取**: 自动爬取华为官方HarmonyOS最佳实践文档，支持SPA页面解析
+- **📝 UI开发规范生成**: 基于Gemini AI智能提取界面开发最佳实践，生成结构化的开发规范
+- **🔧 ArkTS迁移规则**: 自动提取TypeScript到ArkTS迁移过程中的Lint规则和语法约束
 
-### 📦 Windows优化
-- ✅ 修复Windows环境下的配置问题（`.env`文件替代`export`命令）
-- ✅ 一键打包成EXE程序（`build_improved.bat`）
-- ✅ 支持文件夹和单文件两种打包模式
-- ✅ 快速启动脚本（`启动GUI.bat`）
+## 📁 harmony_cursor_rules 说明
 
-### 📖 完善的中文文档
-- ✅ GUI使用说明
-- ✅ 打包问题排查指南
-- ✅ 快速开始指南
-- ✅ 项目文件清单
+项目运行后会生成 `harmony_cursor_rules` 目录，包含按模块分类的开发规范文件。具体涉及的模块配置可查看 `harmony_modules_config.json` 文件：
 
----
-
-## 🚀 快速开始
-
-### 方式一：直接使用GUI（推荐）
-
-```bash
-# 1. 安装依赖
-pip install -r Requirements.txt
-python -m playwright install chromium
-
-# 2. 启动GUI
-python gui_app.py
-# 或双击：启动GUI.bat
-
-# 3. 在GUI中配置API密钥并开始使用
-```
-
-### 方式二：打包成EXE
-
-```bash
-# 双击运行打包脚本
-build_improved.bat
-
-# 选择打包模式：
-# [1] 文件夹模式 - 启动快，适合自用
-# [2] 单文件模式 - 一个EXE，便于分发
-```
-
----
-
-## 📸 界面预览
-
-GUI程序包含：
-- **配置设置区域** - API密钥、输出目录、调试模式
-- **操作区域** - 开始/停止、打开目录、清空日志
-- **运行日志** - 彩色实时日志显示
-- **状态栏** - 当前状态和进度条
-
----
-
-## 🔑 获取API密钥
-
-1. 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 登录Google账号
-3. 创建API密钥
-4. 在GUI中输入或保存到`.env`文件
-
----
-
-## 📂 输出文件
-
-程序会生成以下文件结构：
-
+### 目录结构
 ```
 harmony_cursor_rules/
-├── final_cursor_rules/          # 最终规则文件（重要！）
-│   ├── animation_transition.cursorrules.md
-│   ├── component_encapsulation_reuse.cursorrules.md
-│   ├── declarative_syntax.cursorrules.md
-│   ├── gesture_navigation.cursorrules.md
-│   ├── layout_dialog.cursorrules.md
-│   ├── theme_style.cursorrules.md
-│   └── arkts-lint-rules.md
-├── animation_transition/         # 原始文档
-├── component_encapsulation_reuse/
-├── declarative_syntax/
-├── gesture_navigation/
-├── layout_dialog/
-└── theme_style/
+├── component_encapsulation_reuse/    # 组件封装与复用
+├── layout_dialog/                    # 布局与弹窗
+├── animation_transition/             # 动画与转场
+├── performance_optimization/         # 性能优化
+├── ...                              # 其他模块
+└── final_cursor_rules/              # 最终整合的规则文件
+    ├── component_encapsulation_reuse.cursorrules.md
+    ├── layout_dialog.cursorrules.md
+    ├── arkts-lint-rules.md           # ArkTS迁移规则
+    └── ...
 ```
 
-**重要：** `final_cursor_rules/` 文件夹中的 `.cursorrules.md` 文件可直接用于Cursor等AI编程工具。
+> 💡 **快速使用**: 开发者只需将 `final_cursor_rules` 目录下的规则文件配置到Cursor IDE中即可获得专业的HarmonyOS开发提示。如果需要生成更多的规则文件，可在`harmony_modules_config.json`追加配置。
+
+### 参考文档
+生成的开发规则均基于华为官方权威文档：
+- **界面开发最佳实践**: [HarmonyOS 最佳实践 - 界面开发](https://developer.huawei.com/consumer/cn/doc/best-practices/bpta-ui-dynamic-operations)
+- **ArkTS迁移指南**: [TypeScript到ArkTS迁移指南](https://developer.huawei.com/consumer/en/doc/harmonyos-guides-V14/typescript-to-arkts-migration-guide-V14)
+
+## 🛠️ 使用方式
+
+### 环境准备
+1. **安装依赖**
+```bash
+pip install -r Requirements.txt
+```
+
+2. **配置API密钥**
+```bash
+# 设置Gemini API密钥
+export GEMINI_API_KEY="your-gemini-api-key"
+
+# 可选：设置自定义API端点（如使用代理或自定义服务）
+export GEMINI_BASE_URL="https://your-custom-api-endpoint.com"
+```
+
+### 运行程序
+```bash
+# 标准运行
+python main.py
+
+# 调试模式（保存HTML文件）
+python main.py --debug
+```
+
+### 使用生成的规则
+1. 在你的HarmonyOS项目根目录创建 `.cursorrules` 文件
+2. 将 `final_cursor_rules` 目录中相关 `.md` 文件的内容复制到 `.cursorrules` 文件中
+
+## 📊 输出示例
+
+生成的开发规则文件结构完整，包含：
+- **核心原则**: HarmonyOS开发的基础设计理念和架构原则
+- **推荐做法**: 经过验证的最佳实践和标准代码模式
+- **禁止做法**: 需要避免的错误写法和反模式
+- **代码示例**: 正确与错误写法的对比演示
+- **注意事项**: 关键的开发要点和性能优化建议
 
 ---
 
-## 📖 详细文档
-
-- [快速开始指南](快速开始指南.md) - 立即开始使用
-- [GUI使用说明](GUI使用说明.md) - 详细的GUI操作指南
-- [打包问题排查](打包问题排查.md) - 解决打包相关问题
-- [项目文件清单](GUI项目文件清单.txt) - 所有文件说明
-
----
-
-## 🆚 与原项目的对比
-
-| 特性 | 原项目 | GUI增强版 |
-|------|--------|-----------|
-| 命令行界面 | ✅ | ✅ |
-| GUI界面 | ❌ | ✅ |
-| Windows配置 | 需要手动配置 | 可视化配置 |
-| 打包EXE | ❌ | ✅ |
-| 实时日志 | ✅ | ✅ 彩色显示 |
-| 中文文档 | 部分 | 完整 |
-
----
-
-## 🛠️ 技术栈
-
-- **GUI框架:** Tkinter（Python标准库）
-- **异步处理:** asyncio
-- **网页爬取:** crawl4ai + Playwright
-- **AI处理:** Google Gemini API
-- **打包工具:** PyInstaller
-
----
-
-## 📋 系统要求
-
-- Windows 10/11
-- Python 3.8+ (开发模式)
-- 网络连接
-- 约200-300MB磁盘空间（打包后）
-
----
-
-## 🤝 贡献
-
-欢迎提交Issue和Pull Request！
-
-如果你有好的想法或发现了bug：
-1. Fork本项目
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交你的改动 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启一个Pull Request
-
----
-
-## 📜 许可证
-
-本项目基于原项目 [harmony-cursor-rules](https://github.com/skindhu/harmony-cursor-rules) 开发。
-
-- 原项目部分：遵循原项目的许可证
-- GUI增强部分：采用 MIT License
-
-详见 [LICENSE](LICENSE) 文件。
-
----
-
-## 🙏 致谢
-
-- 感谢 [@skindhu](https://github.com/skindhu) 开发的原始项目
-- 感谢所有为本项目提供建议和反馈的用户
-
----
-
-## 📞 支持
-
-如遇问题：
-1. 查看 [打包问题排查.md](打包问题排查.md)
-2. 查看 [GUI使用说明.md](GUI使用说明.md)
-3. 提交 [Issue](https://github.com/Foraes/harmony-cursor-rules-gui-enhancement/issues)
-
----
-
-## ⭐ Star History
-
-如果这个项目对你有帮助，请给个⭐️支持一下！
-
----
-
-**开始使用：** 双击 `启动GUI.bat` 或运行 `python gui_app.py` 🚀
+*本项目基于AI技术自动化提取华为官方权威文档，为HarmonyOS开发者提供专业、标准的开发规范指导*

@@ -51,30 +51,41 @@ struct MyComponent {
 
 ### 避免写法
 ```arkts
-// 避免写法1：变量未关联UI或仅读取却被定义为状态变量
-@Observed class DataModel { translateX: number = 20; }
-@Component struct MyComponentA {
-  @State data: DataModel = new DataModel(); // 未在UI中使用，不应是状态变量
-  @State label: string = 'Button'; // 仅读取，未修改，不应是状态变量
-  build() { Button(this.label); /* data未在UI中使用 */ }
-}
-
-// 避免写法2：在build方法中引入副作用
-@Component struct MyComponentB {
+// 避免写法1: 在build方法直接调用的函数中引入副作用
+@Component
+struct BadImageEffect {
   private currentOpacity: number = 0; // 非状态变量
-  calculateOpacity(): number {
-    // 错误：在build调用中修改非状态变量，每次刷新都累加
-    this.currentOpacity = (this.currentOpacity + 1) % 100; 
+
+  // 该函数在每次build时都会被调用，意外修改非状态变量
+  private calculateOpacity(): number {
+    this.currentOpacity = (this.currentOpacity + 0.1) % 1;
     return this.currentOpacity;
   }
+
   build() {
-    Image('icon.png').opacity(this.calculateOpacity()); // 每次刷新都会调用并修改currentOpacity
+    Image('icon.png')
+      .opacity(this.calculateOpacity()) // 每次UI刷新都累加opacity
+  }
+}
+
+// 避免写法2: 冗余状态变量
+@Entry
+@Component
+struct BadComponent {
+  // 变量未关联任何UI组件，或仅被读取但未修改，不应定义为状态变量
+  @State unusedData: string = 'some data';
+  @State readonlyMessage: string = 'Hello';
+
+  build() {
+    Column() {
+      // 仅读取readonlyMessage，未修改
+      Text(this.readonlyMessage)
+    }
   }
 }
 ```
 
 ## 注意事项
 
--   状态变量的管理会带来额外的系统开销，过度或不合理使用可能导致性能下降。
--   `StateStore`本身不直接驱动UI刷新，其UI刷新能力依赖于ArkUI系统侧的`@Observed`或`@ObservedV2`对数据的观测能力。
--   持续使用开发工具进行性能分析和代码审查，是保证应用质量和性能的关键。
+-   **利用开发工具**: 使用HarmonyOS提供的诊断工具（如`hidumper`）来分析应用运行时状态变量的变化和UI组件的刷新情况，定位冗余刷新问题。
+-   **代码静态检查**: 定期使用`Code Linter`工具进行代码检查，重点关注性能优化规则（如`@performance/hp-arkui-remove-redundant-state-var`），并根据扫描结果进行优化。
